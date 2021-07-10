@@ -17,10 +17,24 @@ namespace StrType
         {
             get => _data[i]; 
         }
+
         public override string ToString()
         {
             return new string(_data.ToArray());
         }
+        public override bool Equals(object obj)
+        {
+            if(obj is MyString ms)
+            {
+                return ToString() == ms.ToString();
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
 
     }
     class Program
@@ -28,8 +42,8 @@ namespace StrType
         static void Main(string[] args)
         {
             MyString str = new MyString("Hello world!");
-            
-            Console.WriteLine(str);
+            MyString str2 = new MyString("Hello world!!");
+            Console.WriteLine(str.Equals(str2));
         }
     }
 }
