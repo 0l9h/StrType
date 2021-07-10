@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StrType
 {
-    class MyString
+    class MyString: IComparable<MyString>
     {
         List<char> _data = new List<char>();
 
@@ -17,10 +18,66 @@ namespace StrType
         {
             get => _data[i]; 
         }
+
         public override string ToString()
         {
             return new string(_data.ToArray());
         }
+        public override bool Equals(object obj)
+        {
+            if(obj is MyString ms)
+            {
+                return ToString() == ms.ToString();
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+
+
+        public int CompareTo(MyString other)
+        {
+            if (other is null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+            return string.Compare(ToString(), other.ToString());
+        }
+
+
+
+        public static bool operator==(MyString first, MyString second)
+        {
+            return first.Equals(second);
+        }
+        public static bool operator!=(MyString first, MyString second)
+        {
+            return !first.Equals(second);
+        }
+        public static bool operator>(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == 1) return true;
+            return false;
+        }
+        public static bool operator <(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == -1) return true;
+            return false;
+        }
+        public static bool operator >=(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == -1) return false;
+            return true;
+        }
+        public static bool operator <=(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == 1) return false;
+            return true;
+        }
+
 
     }
     class Program
@@ -28,8 +85,8 @@ namespace StrType
         static void Main(string[] args)
         {
             MyString str = new MyString("Hello world!");
-            
-            Console.WriteLine(str);
+            MyString str2 = new MyString("Hellpo world!");
+            Console.WriteLine(str<=str2);
         }
     }
 }
