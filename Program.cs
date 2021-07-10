@@ -7,13 +7,29 @@ namespace StrType
     {
         List<char> _data = new List<char>();
 
-        public MyString
+        public MyString() { }
+        public MyString(string str)
+        {
+            _data.AddRange(str);
+        }
+
+        public char this[int i]
+        {
+            get => _data[i]; 
+        }
+        public override string ToString()
+        {
+            return new string(_data.ToArray());
+        }
+
     }
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MyString str = new MyString("Hello world!");
+            
+            Console.WriteLine(str);
         }
     }
 }
