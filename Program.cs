@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace StrType
 {
-    class MyString: IComparable<MyString>
+    class MyString : IComparable<MyString>
     {
         List<char> _data = new List<char>();
 
@@ -13,10 +13,14 @@ namespace StrType
         {
             _data.AddRange(str);
         }
+        public MyString(char[] arr)
+        {
+            _data.AddRange(arr);
+        }
 
         public char this[int i]
         {
-            get => _data[i]; 
+            get => _data[i];
         }
 
         public override string ToString()
@@ -25,7 +29,7 @@ namespace StrType
         }
         public override bool Equals(object obj)
         {
-            if(obj is MyString ms)
+            if (obj is MyString ms)
             {
                 return ToString() == ms.ToString();
             }
@@ -49,15 +53,15 @@ namespace StrType
 
 
 
-        public static bool operator==(MyString first, MyString second)
+        public static bool operator ==(MyString first, MyString second)
         {
             return first.Equals(second);
         }
-        public static bool operator!=(MyString first, MyString second)
+        public static bool operator !=(MyString first, MyString second)
         {
             return !first.Equals(second);
         }
-        public static bool operator>(MyString first, MyString second)
+        public static bool operator >(MyString first, MyString second)
         {
             if (string.Compare(first.ToString(), second.ToString()) == 1) return true;
             return false;
@@ -78,15 +82,31 @@ namespace StrType
             return true;
         }
 
+        public static implicit operator MyString(string str)
+        {
+            return new MyString(str);
+        }
+        public static implicit operator string(MyString str)
+        {
+            return str.ToString();
+        }
+        public static explicit operator MyString(char[] arr)
+        {
+            return new MyString(arr);
+        }
+
+
 
     }
     class Program
     {
         static void Main(string[] args)
         {
-            MyString str = new MyString("Hello world!");
-            MyString str2 = new MyString("Hellpo world!");
-            Console.WriteLine(str<=str2);
+            
+            char[] arr = new char[] { 'f', 'o', 'o' };
+            MyString ms = (MyString)arr;
+
+            Console.WriteLine(ms);
         }
     }
 }
