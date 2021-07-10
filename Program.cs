@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace StrType
 {
-    class MyString : IComparable<MyString>
+    class MyString : IComparable<MyString>, IEnumerable<char>
     {
         List<char> _data = new List<char>();
 
+
+        // Constructors
         public MyString() { }
         public MyString(string str)
         {
@@ -18,11 +21,15 @@ namespace StrType
             _data.AddRange(arr);
         }
 
+
+        // Indexer
         public char this[int i]
         {
             get => _data[i];
         }
 
+
+        // Overriden methods
         public override string ToString()
         {
             return new string(_data.ToArray());
@@ -42,6 +49,7 @@ namespace StrType
 
 
 
+        // Implementing interfaces
         public int CompareTo(MyString other)
         {
             if (other is null)
@@ -51,8 +59,17 @@ namespace StrType
             return string.Compare(ToString(), other.ToString());
         }
 
+        public IEnumerator<char> GetEnumerator()
+        {
+            return _data.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
 
+        // Operators overloading
         public static bool operator ==(MyString first, MyString second)
         {
             return first.Equals(second);
@@ -82,6 +99,9 @@ namespace StrType
             return true;
         }
 
+
+
+        // Casting 
         public static implicit operator MyString(string str)
         {
             return new MyString(str);
@@ -95,9 +115,8 @@ namespace StrType
             return new MyString(arr);
         }
 
-
-
     }
+
     class Program
     {
         static void Main(string[] args)
@@ -105,6 +124,10 @@ namespace StrType
             
             char[] arr = new char[] { 'f', 'o', 'o' };
             MyString ms = (MyString)arr;
+            foreach (char item in ms)
+            {
+                Console.WriteLine(item);
+            }
 
             Console.WriteLine(ms);
         }
