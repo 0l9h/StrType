@@ -117,19 +117,24 @@ namespace StrType
 
     }
 
+
+    static class MyExtensions
+    {
+        static public MyString ReverseMyString(this MyString ms)
+        {
+            char[] arr = ms.ToString().ToCharArray();
+            Array.Reverse(arr);
+            return new MyString(arr);
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            
-            char[] arr = new char[] { 'f', 'o', 'o' };
-            MyString ms = (MyString)arr;
-            foreach (char item in ms)
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.WriteLine(ms);
+            MyString ms = new MyString("hello");
+            MyString m = ms.ReverseMyString();
+            Console.WriteLine(m);
         }
     }
 }
