@@ -36,14 +36,44 @@ namespace StrType
         }
 
 
+        public static bool operator==(MyString first, MyString second)
+        {
+            return first.Equals(second);
+        }
+        public static bool operator!=(MyString first, MyString second)
+        {
+            return !first.Equals(second);
+        }
+        public static bool operator>(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == 1) return true;
+            return false;
+        }
+        public static bool operator <(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == -1) return true;
+            return false;
+        }
+        public static bool operator >=(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == -1) return false;
+            return true;
+        }
+        public static bool operator <=(MyString first, MyString second)
+        {
+            if (string.Compare(first.ToString(), second.ToString()) == 1) return false;
+            return true;
+        }
+
+
     }
     class Program
     {
         static void Main(string[] args)
         {
             MyString str = new MyString("Hello world!");
-            MyString str2 = new MyString("Hello world!!");
-            Console.WriteLine(str.Equals(str2));
+            MyString str2 = new MyString("Hellpo world!");
+            Console.WriteLine(str<=str2);
         }
     }
 }
