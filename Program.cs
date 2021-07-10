@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StrType
 {
-    class MyString
+    class MyString: IComparable<MyString>
     {
         List<char> _data = new List<char>();
 
@@ -34,6 +35,18 @@ namespace StrType
         {
             return ToString().GetHashCode();
         }
+
+
+
+        public int CompareTo(MyString other)
+        {
+            if (other is null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+            return string.Compare(ToString(), other.ToString());
+        }
+
 
 
         public static bool operator==(MyString first, MyString second)
